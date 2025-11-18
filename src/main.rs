@@ -1,10 +1,14 @@
 mod build_logs;
+mod cli;
+mod deno_logs;
 mod installer;
 mod kernel_logs;
 mod messages;
 mod stages;
 mod ui;
 
+use clap::Parser;
+use cli::Cli;
 use colored::*;
 use installer::Installer;
 use std::io;
@@ -16,7 +20,10 @@ fn main() {
 }
 
 fn run_installer() -> io::Result<()> {
-    let mut installer = Installer::new();
+    let cli = Cli::parse();
+    let stages = cli.get_stages();
+
+    let mut installer = Installer::new(stages);
     installer.run()
 }
 

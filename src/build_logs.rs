@@ -30,7 +30,12 @@ impl BuildLogs {
         Self { logs }
     }
 
-    /// Get multiple random build log messages
+    /// Get all build logs
+    pub fn all_logs(&self) -> &[String] {
+        &self.logs
+    }
+
+    #[allow(dead_code)]
     pub fn random_batch(&self, count: usize) -> Vec<&str> {
         let mut rng = rand::thread_rng();
         let mut batch = Vec::new();

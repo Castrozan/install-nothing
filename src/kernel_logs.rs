@@ -33,16 +33,18 @@ impl KernelLogs {
     /// Strip kernel timestamp from log line
     /// Converts "[    0.000000] message" to "message"
     fn strip_timestamp(line: &str) -> String {
-        // Check if line starts with '[' followed by timestamp pattern
         if let Some(start) = line.find('[') {
             if let Some(end) = line[start..].find(']') {
                 let timestamp_end = start + end + 1;
-                // Return everything after the closing bracket, trimmed
                 return line[timestamp_end..].trim_start().to_string();
             }
         }
-        // If no timestamp pattern found, return as is
         line.to_string()
+    }
+
+    /// Get all kernel logs
+    pub fn all_logs(&self) -> &[String] {
+        &self.logs
     }
 
     /// Get multiple random kernel log messages

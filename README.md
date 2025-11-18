@@ -13,6 +13,21 @@ cargo run --release
 
 Press Ctrl+C to stop.
 
+### Pick what to install
+
+```bash
+# Install specific stages
+cargo run --release -- deno
+
+# Install everything (default)
+cargo run --release -- --all
+```
+
+See available stages:
+```bash
+cargo run --release -- --help
+```
+
 ## License
 
 Do whatever you want with it.

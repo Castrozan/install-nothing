@@ -1,5 +1,6 @@
+use crate::cli::Stage;
 use crate::messages::{EASTER_EGGS, RETRY_MESSAGES, WARNINGS};
-use crate::stages::all_stages;
+use crate::stages::selected_stages;
 use crate::ui::Spinner;
 use colored::*;
 use crossterm::{
@@ -15,12 +16,14 @@ use std::time::Duration;
 
 pub struct Installer {
     rng: rand::rngs::ThreadRng,
+    selected_stages: Vec<Stage>,
 }
 
 impl Installer {
-    pub fn new() -> Self {
+    pub fn new(stages: Vec<Stage>) -> Self {
         Self {
             rng: rand::thread_rng(),
+            selected_stages: stages,
         }
     }
 
@@ -142,7 +145,7 @@ impl Installer {
                 thread::sleep(Duration::from_millis(1000));
             }
 
-            let stages = all_stages();
+            let stages = selected_stages(&self.selected_stages);
 
             for stage in stages {
                 if self.check_exit() {
@@ -171,6 +174,6 @@ impl Installer {
 
 impl Default for Installer {
     fn default() -> Self {
-        Self::new()
+        Self::new(Stage::all())
     }
 }

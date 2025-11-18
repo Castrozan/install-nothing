@@ -19,7 +19,6 @@ impl InstallationStage for FilesystemStage {
 
         let mut rng = rand::thread_rng();
 
-        // Create filesystem
         println!("{}", "Creating ext4 filesystem on /dev/sda2...".bright_white());
         thread::sleep(Duration::from_millis(600));
 
@@ -60,7 +59,6 @@ impl InstallationStage for FilesystemStage {
 
         println!();
 
-        // fsck
         if rng.gen_bool(0.4) {
             println!("{}", "Running filesystem check...".bright_white());
             thread::sleep(Duration::from_millis(500));

@@ -32,27 +32,44 @@ impl InstallationStage for CompilationStage {
         println!();
 
         let mut rng = rand::thread_rng();
-
-        let log_count = rng.gen_range(15..30);
-        let logs = self.build_logs.random_batch(log_count);
+        let logs = self.build_logs.all_logs();
 
         for log in logs {
             if exit_check() {
                 return Err(io::Error::new(io::ErrorKind::Interrupted, "User interrupt"));
             }
 
-            println!("{}", log.cyan());
-            thread::sleep(Duration::from_millis(rng.gen_range(80..250)));
+            let should_show_progress = log.trim().starts_with("CC")
+                || log.trim().starts_with("LD")
+                || log.trim().starts_with("AR");
+
+            if should_show_progress {
+                let speed_category = rng.gen_range(0..10);
+                let duration = if speed_category < 3 {
+                    rng.gen_range(50..200)
+                } else if speed_category < 7 {
+                    rng.gen_range(200..600)
+                } else {
+                    rng.gen_range(600..1500)
+                };
+
+                let progress = ProgressBar::new(ProgressStyle::Block);
+                progress.animate(&log.cyan().to_string(), duration, exit_check)?;
+            } else {
+                println!("{}", log.cyan());
+                let speed_category = rng.gen_range(0..10);
+                let delay = if speed_category < 4 {
+                    rng.gen_range(10..30)
+                } else if speed_category < 8 {
+                    rng.gen_range(30..80)
+                } else {
+                    rng.gen_range(80..200)
+                };
+                thread::sleep(Duration::from_millis(delay));
+            }
         }
 
         println!();
-        let progress = ProgressBar::new(ProgressStyle::Gradient);
-        progress.animate(
-            "Linking modules:",
-            rng.gen_range(2000..4000),
-            exit_check,
-        )?;
-
         println!("{}", "make[1]: Leaving directory '/usr/src/linux-headers-5.4.0'".dimmed());
 
         Ok(())

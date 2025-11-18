@@ -5,10 +5,11 @@ use std::time::Duration;
 
 #[derive(Clone, Copy)]
 pub enum ProgressStyle {
-    Hash,      // [####......]
-    Equals,    // [========..]
-    Block,     // [████░░░░░░]
-    Gradient,  // [▓▓▓▓▒▒▒░░░]
+    Hash,
+    Equals,
+    Block,
+    #[allow(dead_code)]
+    Gradient,
 }
 
 pub struct ProgressBar {
