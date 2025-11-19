@@ -2,7 +2,7 @@
 
 A terminal application that simulates installing things. It doesn't actually install anything.
 
-![Demo](demo/demo.gif)
+![Demo](demo/old-demo.gif)
 
 ## Usage
 
