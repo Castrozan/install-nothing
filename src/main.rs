@@ -25,7 +25,7 @@ fn main() {
 fn run_installer() -> io::Result<()> {
     let cli = Cli::parse();
     let mut stages = cli.get_stages();
-    
+
     let mut rng = rand::thread_rng();
     stages.shuffle(&mut rng);
 

@@ -41,7 +41,9 @@ impl InstallationStage for BootStage {
             }
 
             println!("{}", log.dimmed());
-            thread::sleep(Duration::from_millis(rng.gen_range(self.config.log_delay_range.clone())));
+            thread::sleep(Duration::from_millis(
+                rng.gen_range(self.config.log_delay_range.clone()),
+            ));
         }
 
         println!();

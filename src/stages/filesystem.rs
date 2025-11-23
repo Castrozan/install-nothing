@@ -30,7 +30,11 @@ impl InstallationStage for FilesystemStage {
         let blocks = rng.gen_range(50000000..100000000);
         let inodes = blocks / 4;
 
-        println!("{} {}", LogGenerator::timestamp().dimmed(), format!("mke2fs 1.45.5 (07-Jan-2020)").dimmed());
+        println!(
+            "{} {}",
+            LogGenerator::timestamp().dimmed(),
+            format!("mke2fs 1.45.5 (07-Jan-2020)").dimmed()
+        );
         println!(
             "{} {}",
             LogGenerator::timestamp().dimmed(),
@@ -59,7 +63,11 @@ impl InstallationStage for FilesystemStage {
 
         let backup_blocks = [32768, 98304, 163840, 229376, 294912];
         for block in &backup_blocks {
-            println!("{} {}", LogGenerator::timestamp().dimmed(), format!("        {}", block).dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                format!("        {}", block).dimmed()
+            );
             thread::sleep(Duration::from_millis(100));
         }
 
@@ -78,9 +86,17 @@ impl InstallationStage for FilesystemStage {
             exit_check,
         )?;
 
-        println!("{} {}", LogGenerator::timestamp().dimmed(), "Creating journal (32768 blocks): ".dimmed());
+        println!(
+            "{} {}",
+            LogGenerator::timestamp().dimmed(),
+            "Creating journal (32768 blocks): ".dimmed()
+        );
         thread::sleep(Duration::from_millis(rng.gen_range(800..1200)));
-        println!("{} {}", LogGenerator::timestamp().dimmed(), "done".bright_green());
+        println!(
+            "{} {}",
+            LogGenerator::timestamp().dimmed(),
+            "done".bright_green()
+        );
 
         println!(
             "{} {}",
@@ -88,23 +104,55 @@ impl InstallationStage for FilesystemStage {
             "Writing superblocks and filesystem accounting information: ".dimmed()
         );
         thread::sleep(Duration::from_millis(rng.gen_range(600..1000)));
-        println!("{} {}", LogGenerator::timestamp().dimmed(), "done".bright_green());
+        println!(
+            "{} {}",
+            LogGenerator::timestamp().dimmed(),
+            "done".bright_green()
+        );
 
         println!();
 
         if rng.gen_bool(0.4) {
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "Running filesystem check...".bright_white());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "Running filesystem check...".bright_white()
+            );
             thread::sleep(Duration::from_millis(500));
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "e2fsck 1.45.5 (07-Jan-2020)".dimmed());
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "Pass 1: Checking inodes, blocks, and sizes".dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "e2fsck 1.45.5 (07-Jan-2020)".dimmed()
+            );
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "Pass 1: Checking inodes, blocks, and sizes".dimmed()
+            );
             thread::sleep(Duration::from_millis(rng.gen_range(800..1500)));
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "Pass 2: Checking directory structure".dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "Pass 2: Checking directory structure".dimmed()
+            );
             thread::sleep(Duration::from_millis(rng.gen_range(600..1000)));
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "Pass 3: Checking directory connectivity".dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "Pass 3: Checking directory connectivity".dimmed()
+            );
             thread::sleep(Duration::from_millis(rng.gen_range(400..800)));
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "Pass 4: Checking reference counts".dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "Pass 4: Checking reference counts".dimmed()
+            );
             thread::sleep(Duration::from_millis(rng.gen_range(400..700)));
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "Pass 5: Checking group summary information".dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "Pass 5: Checking group summary information".dimmed()
+            );
             thread::sleep(Duration::from_millis(rng.gen_range(300..600)));
             println!(
                 "{} {}",

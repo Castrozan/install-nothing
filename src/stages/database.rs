@@ -44,12 +44,20 @@ impl InstallationStage for DatabaseStage {
                 "The files belonging to this database system will be owned by user \"postgres\"."
                     .dimmed()
             );
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "This user must also own the server process.".dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "This user must also own the server process.".dimmed()
+            );
             thread::sleep(Duration::from_millis(500));
         }
 
         println!();
-        println!("{} {}", LogGenerator::timestamp().dimmed(), "Creating database files...".bright_white());
+        println!(
+            "{} {}",
+            LogGenerator::timestamp().dimmed(),
+            "Creating database files...".bright_white()
+        );
 
         let files = [
             "global/pg_control",
@@ -63,7 +71,11 @@ impl InstallationStage for DatabaseStage {
             if exit_check() {
                 return Err(io::Error::new(io::ErrorKind::Interrupted, "User interrupt"));
             }
-            println!("{} {}", LogGenerator::timestamp().dimmed(), format!("  creating {}", file).dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                format!("  creating {}", file).dimmed()
+            );
             thread::sleep(Duration::from_millis(rng.gen_range(150..300)));
         }
 

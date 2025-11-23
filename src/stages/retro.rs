@@ -35,7 +35,11 @@ impl InstallationStage for RetroSoftwareStage {
             );
 
             if rng.gen_bool(0.2) {
-                println!("{} {}", LogGenerator::timestamp().dimmed(), "Checking for previous installation...".dimmed());
+                println!(
+                    "{} {}",
+                    LogGenerator::timestamp().dimmed(),
+                    "Checking for previous installation...".dimmed()
+                );
                 thread::sleep(Duration::from_millis(500));
             }
 
@@ -46,11 +50,19 @@ impl InstallationStage for RetroSoftwareStage {
                 exit_check,
             )?;
 
-            println!("{} {}", LogGenerator::timestamp().dimmed(), "  Creating shortcuts...".dimmed());
+            println!(
+                "{} {}",
+                LogGenerator::timestamp().dimmed(),
+                "  Creating shortcuts...".dimmed()
+            );
             thread::sleep(Duration::from_millis(400));
 
             if rng.gen_bool(0.3) {
-                println!("{} {}", LogGenerator::timestamp().dimmed(), "  Registering file associations...".dimmed());
+                println!(
+                    "{} {}",
+                    LogGenerator::timestamp().dimmed(),
+                    "  Registering file associations...".dimmed()
+                );
                 thread::sleep(Duration::from_millis(300));
             }
         }

@@ -94,8 +94,14 @@ impl InstallationStage for BiosStage {
             "{}",
             "╔═══════════════════════════════════════════════════════════════╗".bright_cyan()
         );
-        println!("{}", format!("║  {:<61}║", self.config.vendor).bright_cyan());
-        println!("{}", format!("║  {:<61}║", self.config.version).bright_cyan());
+        println!(
+            "{}",
+            format!("║  {:<61}║", self.config.vendor).bright_cyan()
+        );
+        println!(
+            "{}",
+            format!("║  {:<61}║", self.config.version).bright_cyan()
+        );
         println!(
             "{}",
             "╚═══════════════════════════════════════════════════════════════╝".bright_cyan()
@@ -294,7 +300,11 @@ impl InstallationStage for BiosStage {
         )?;
 
         println!();
-        spinner.animate("Boot Device Priority:", self.config.boot_priority_time, exit_check)?;
+        spinner.animate(
+            "Boot Device Priority:",
+            self.config.boot_priority_time,
+            exit_check,
+        )?;
         println!("  1st: {}", "Hard Disk Drive".bright_green());
         println!("  2nd: {}", "CD-ROM Drive".dimmed());
         println!("  3rd: {}", "Network Boot".dimmed());
@@ -362,7 +372,11 @@ impl InstallationStage for BiosStage {
         )?;
 
         println!();
-        spinner.animate("Firmware update complete!", self.config.complete_time, exit_check)?;
+        spinner.animate(
+            "Firmware update complete!",
+            self.config.complete_time,
+            exit_check,
+        )?;
         spinner.animate(
             "Updating ESCD (Extended System Configuration Data)...",
             self.config.escd_time,

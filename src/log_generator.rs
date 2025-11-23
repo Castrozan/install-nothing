@@ -1,5 +1,5 @@
-use std::sync::{Mutex, LazyLock};
 use rand::Rng;
+use std::sync::{LazyLock, Mutex};
 
 #[allow(dead_code)]
 pub struct LogGenerator;

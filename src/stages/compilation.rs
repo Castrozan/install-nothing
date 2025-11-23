@@ -1,6 +1,6 @@
 use super::InstallationStage;
-use crate::log_generator::LogGenerator;
 use crate::build_logs::BuildLogs;
+use crate::log_generator::LogGenerator;
 use crate::ui::{ProgressBar, ProgressStyle};
 use colored::*;
 use rand::Rng;
@@ -59,7 +59,11 @@ impl InstallationStage for CompilationStage {
                 };
 
                 let progress = ProgressBar::new(ProgressStyle::Block);
-                progress.animate(&format!("{} {}", LogGenerator::timestamp().dimmed(), log.cyan()), duration, exit_check)?;
+                progress.animate(
+                    &format!("{} {}", LogGenerator::timestamp().dimmed(), log.cyan()),
+                    duration,
+                    exit_check,
+                )?;
             } else {
                 println!("{} {}", LogGenerator::timestamp().dimmed(), log.cyan());
                 let speed_category = rng.gen_range(0..10);

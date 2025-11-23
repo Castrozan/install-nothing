@@ -35,7 +35,11 @@ impl InstallationStage for ServicesStage {
             ("apache2.service", "The Apache HTTP Server"),
         ];
 
-        println!("{} {}", LogGenerator::timestamp().dimmed(), "Starting system services...".bright_white());
+        println!(
+            "{} {}",
+            LogGenerator::timestamp().dimmed(),
+            "Starting system services...".bright_white()
+        );
         println!();
 
         for (_service, description) in &services {

@@ -65,4 +65,3 @@ pub const RETRO_SOFTWARE: &[(&str, &str, u32)] = &[
     ("RealPlayer", "8.0", 8932),
     ("Adobe Flash Player", "7.0", 2341),
 ];
-

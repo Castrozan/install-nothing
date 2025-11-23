@@ -28,8 +28,11 @@ impl InstallationStage for CloudStage {
         println!();
 
         let mut rng = rand::thread_rng();
-        
-        println!("{} Initializing Terraform backend...", LogGenerator::timestamp().dimmed());
+
+        println!(
+            "{} Initializing Terraform backend...",
+            LogGenerator::timestamp().dimmed()
+        );
         thread::sleep(Duration::from_millis(600));
 
         let resources = [
@@ -62,40 +65,69 @@ impl InstallationStage for CloudStage {
                 _ => resource.cyan(),
             };
 
-            println!("{} Creating {} ({})", LogGenerator::timestamp().dimmed(), colored_resource, r_type.dimmed());
-            
+            println!(
+                "{} Creating {} ({})",
+                LogGenerator::timestamp().dimmed(),
+                colored_resource,
+                r_type.dimmed()
+            );
+
             if rng.gen_bool(self.config.failure_rate_rate_limit) {
                 thread::sleep(Duration::from_millis(rng.gen_range(200..500)));
-                println!("{} Error: 429 Too Many Requests (RequestLimitExceeded)", LogGenerator::timestamp().red());
+                println!(
+                    "{} Error: 429 Too Many Requests (RequestLimitExceeded)",
+                    LogGenerator::timestamp().red()
+                );
                 println!("{} Throttling...", LogGenerator::timestamp().yellow());
                 thread::sleep(Duration::from_millis(2000));
-                println!("{} Resuming operation...", LogGenerator::timestamp().dimmed());
+                println!(
+                    "{} Resuming operation...",
+                    LogGenerator::timestamp().dimmed()
+                );
             }
 
-            if r_type == "EC2 Instance" && rng.gen_bool(self.config.failure_rate_insufficient_capacity) {
+            if r_type == "EC2 Instance"
+                && rng.gen_bool(self.config.failure_rate_insufficient_capacity)
+            {
                 thread::sleep(Duration::from_millis(1000));
                 println!("{} Error: InsufficientInstanceCapacity: We currently do not have sufficient capacity in the Availability Zone you requested.", LogGenerator::timestamp().red());
-                println!("{} Retrying in different Availability Zone (us-east-1b)...", LogGenerator::timestamp().yellow());
+                println!(
+                    "{} Retrying in different Availability Zone (us-east-1b)...",
+                    LogGenerator::timestamp().yellow()
+                );
                 thread::sleep(Duration::from_millis(1500));
             }
 
             if r_type == "Lambda" && rng.gen_bool(self.config.failure_rate_dependency_violation) {
-                 println!("{} Error: The role defined for the function cannot be assumed by the function.", LogGenerator::timestamp().red());
-                 println!("{} Waiting for IAM propagation...", LogGenerator::timestamp().yellow());
-                 thread::sleep(Duration::from_millis(2500));
+                println!("{} Error: The role defined for the function cannot be assumed by the function.", LogGenerator::timestamp().red());
+                println!(
+                    "{} Waiting for IAM propagation...",
+                    LogGenerator::timestamp().yellow()
+                );
+                thread::sleep(Duration::from_millis(2500));
             }
 
             if r_type == "S3 Bucket" && rng.gen_bool(self.config.failure_rate_checksum_mismatch) {
-                 println!("{} Error: Checksum mismatch during upload.", LogGenerator::timestamp().red());
-                 println!("{} Re-calculating hashes and retrying...", LogGenerator::timestamp().yellow());
-                 thread::sleep(Duration::from_millis(1200));
+                println!(
+                    "{} Error: Checksum mismatch during upload.",
+                    LogGenerator::timestamp().red()
+                );
+                println!(
+                    "{} Re-calculating hashes and retrying...",
+                    LogGenerator::timestamp().yellow()
+                );
+                thread::sleep(Duration::from_millis(1200));
             }
 
             let duration = rng.gen_range(self.config.provision_speed_range.clone());
             let progress = ProgressBar::new(ProgressStyle::Block);
             progress.animate("Provisioning", duration, exit_check)?;
-            
-            println!("{} Resource {} is Available", LogGenerator::timestamp().dimmed(), colored_resource);
+
+            println!(
+                "{} Resource {} is Available",
+                LogGenerator::timestamp().dimmed(),
+                colored_resource
+            );
         }
 
         println!();
